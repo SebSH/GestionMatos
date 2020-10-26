@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="WpfApplicationSlider.UserControls.MaterielView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplicationSlider.View"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="502" d:DesignWidth="737">
+    <Grid>
+
+        <TextBox x:Name="FilterBox" Text="{Binding FilterString, Mode=TwoWay}" Background="#545d6a" HorizontalAlignment="left" Height="23"  TextWrapping="Wrap" Width="133" Margin="445,296,0,183.4">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding FilterChange}" CommandParameter="{Binding ElementName=FilterBox}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <Button Margin="588,298,60.8,183.4" Content="Rechercher" Command="{Binding SearchCommand}"/>
+        <DataGrid Background="#fafafa" Foreground="#212121"  ItemsSource="{Binding Filteredmateriels}" SelectedItem="{Binding SelectedMateriel}" HorizontalAlignment="Left" Height="212" Margin="161,324,-13.2,-33.6" VerticalAlignment="Top" Width="589" FontWeight="Bold" BorderThickness="0" Opacity="0.70" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nom" Binding="{Binding NomMateriel}" Width="85"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="85"/>
+                <DataGridTextColumn Header="Numero" Binding="{Binding Numero}" Width="85"/>
+                <DataGridTextColumn Header="MTBF" Binding="{Binding MTBF}" Width="85"/>
+                <DataGridTextColumn Header="Site" Binding="{Binding NomSite}" Width="85"/>
+                <DataGridTextColumn Header="Client" Binding="{Binding NomClient}" Width="85"/>
+                <DataGridTextColumn Header="Date Alert" Binding="{Binding Dateinterv}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Gestion du Materiel" FontSize="22" Foreground="#618685" HorizontalAlignment="Left" Margin="116,0,0,0" VerticalAlignment="Top" Width="200"/>
+        <Grid   Margin="116,45,291.8,174.4" IsHitTestVisible="True"  IsEnabled="True" Visibility="Visible">
+
+            <Label Content="Ajoutez un materiel" Foreground="#618685" HorizontalAlignment="Left" Margin="67,10,0,0" VerticalAlignment="Top" Width="233"/>
+            <TextBox x:Name="nomMateriel" Background="#b2b2b2" HorizontalAlignment="Left" Height="23" Margin="67,54,0,0" TextWrapping="Wrap" Text="{Binding NomMateriel, Mode=TwoWay}" VerticalAlignment="Top" Width="192"/>
+            <TextBox x:Name="description"  Background="#b2b2b2" HorizontalAlignment="Left" Height="23" Margin="67,100,0,0" TextWrapping="Wrap" Text="{Binding Description, Mode=TwoWay}" VerticalAlignment="Top" Width="192"/>
+            <TextBox x:Name="numero" Background="#b2b2b2" HorizontalAlignment="Left" Height="23" Margin="67,141,0,0" TextWrapping="Wrap" Text="{Binding Numero, Mode=TwoWay}" VerticalAlignment="Top" Width="192"/>
+            <TextBox x:Name="mtbf" Background="#b2b2b2" HorizontalAlignment="Left" Height="23" Margin="67,186,0,0" TextWrapping="Wrap" Text="{Binding MTBF, Mode=TwoWay}" VerticalAlignment="Top" Width="192"/>
+            <Button x:Name="AddMateriel"  Command="{Binding AddCommand }" Background="#618685"  HorizontalAlignment="Left" Margin="29,238,0,0" VerticalAlignment="Top" Width="75" >
+                <fa:ImageAwesome Icon="UserPlus" Height="25" Width="25" Margin="5" Foreground="White"/>
+            </Button>
+            <Button x:Name="EditClient" Command="{Binding EditCommand}" Background="#618685" HorizontalAlignment="Left" Margin="138,239,0,0" VerticalAlignment="Top" Width="75">
+                <fa:ImageAwesome Icon="Pencil" Height="25" Width="25" Margin="5" Foreground="White"  />
+            </Button>
+            <Button x:Name="DeleteMateriel"  Background="#618685" Command="{Binding DeleteCommand}"  HorizontalAlignment="Left" Margin="249,238,0,0" VerticalAlignment="Top" Width="75">
+                <fa:ImageAwesome Icon="Trash" Height="25" Width="25" Margin="5" Foreground="White"  />
+
+            </Button>
+            <Grid HorizontalAlignment="Left" Height="100" Margin="329,153,-100,0" VerticalAlignment="Top" Width="100">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="99*"/>
+                </Grid.RowDefinitions>
+            </Grid>
+
+        </Grid>
+        <Label Content="{Binding Message}" FontSize="12" Foreground="Crimson"  HorizontalAlignment="Left" Margin="161,298,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cmbClient" Background="#545d6a" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" Margin="402,100,196.8,380.4" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding NomClient}"></Label>
+                        <Label Content="{Binding Adresse}"></Label>
+                        <Label Content="{Binding Id}"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox x:Name="cmbSite" Background="#545d6a" ItemsSource="{Binding FilteredSites}" SelectedItem="{Binding SelectedSite}" Margin="402,144,196.8,336.4" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding NomSite}"/>
+
+
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </Grid>
+
+</UserControl>
